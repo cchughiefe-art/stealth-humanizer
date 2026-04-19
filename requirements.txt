@@ -1,1 +1,4 @@
-fastapi\ngroq\nuvicorn
+fastapi
+groq
+uvicorn[standard]
+python-multipart
