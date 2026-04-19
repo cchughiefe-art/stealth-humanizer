@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stealth.js | Industrial Grade AI Humanizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0f172a] text-slate-200 font-sans selection:bg-blue-500/30">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-slate-800 pb-8">
+            <div>
+                <h1 class="text-3xl font-black tracking-tighter text-white italic">STEALTH<span class="text-blue-500">.JS.ORG</span></h1>
+                <p class="text-slate-500 text-sm font-medium">INDUSTRIAL GRADE HUMANIZER ENGINE</p>
+            </div>
+            <div class="mt-4 md:mt-0 flex gap-4 text-xs font-bold uppercase tracking-widest">
+                <span class="text-blue-400">Status: Operational</span>
+                <span class="text-slate-500">Model: Llama-3.3-Stealth</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-px bg-slate-800 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/10">
+            <div class="bg-[#0f172a] p-8">
+                <h3 class="text-xs font-bold text-slate-500 mb-4 uppercase">Source Content (AI Generated)</h3>
+                <textarea id="input" class="w-full h-[450px] bg-transparent text-slate-300 outline-none resize-none text-lg leading-relaxed placeholder:text-slate-700" placeholder="Paste robotic text here..."></textarea>
+            </div>
+            <div class="bg-[#111c33] p-8 relative">
+                <h3 class="text-xs font-bold text-blue-500/50 mb-4 uppercase">Stealth Output (Human Grade)</h3>
+                <div id="output" class="w-full h-[450px] text-slate-300 text-lg leading-relaxed overflow-y-auto prose prose-invert prose-slate">
+                    <span class="text-slate-700 italic">Processing results will appear here...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 flex flex-col items-center">
+            <button onclick="process()" id="btn" class="group relative px-12 py-5 bg-blue-600 rounded-full font-black text-white hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20 active:scale-95 overflow-hidden">
+                <span id="btnText" class="relative z-10">BYPASS AI DETECTION</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+            <p class="mt-4 text-slate-600 text-xs">Proprietary Perplexity Algorithm v1.0.4 - Built for Nigerian Content Creators</p>
+        </div>
+    </div>
+
+    <script>
+        async function process() {
+            const input = document.getElementById('input').value;
+            const output = document.getElementById('output');
+            const btn = document.getElementById('btn');
+            const btnText = document.getElementById('btnText');
+            
+            if(!input) return;
+            
+            btn.disabled = true;
+            btnText.innerText = "RUNNING STEALTH PROTOCOLS...";
+            output.innerHTML = '<div class="space-y-4 animate-pulse"><div class="h-4 bg-slate-800 rounded w-3/4"></div><div class="h-4 bg-slate-800 rounded"></div><div class="h-4 bg-slate-800 rounded w-5/6"></div></div>';
+
+            try {
+                const response = await fetch('/api/humanize', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({text: input})
+                });
+                const data = await response.json();
+                output.innerText = data.result || data.error;
+            } catch (e) {
+                output.innerText = "CORE ENGINE ERROR: Check API link.";
+            } finally {
+                btn.disabled = false;
+                btnText.innerText = "BYPASS AI DETECTION";
+            }
+        }
+    </script>
+</body>
+</html>
